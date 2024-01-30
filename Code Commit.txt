@@ -1,0 +1,25 @@
+import random
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_json('yelp_academic_dataset_business.json', lines=True)
+df.head()
+
+null_counts = df.isnull().sum()
+print(null_counts)
+
+df.dropna(subset=['hours'], inplace=True)
+df.head()
+
+def extract_initials(city_name):
+    words = city_name.split()
+    initials = [word[0].upper() for word in words]
+    return ''.join(initials)
+
+df['city2'] = df['city'].apply(extract_initials)
+print(df)
+df.head()
+
+summary_statistics = df.describe()
+print(summary_statistics)
